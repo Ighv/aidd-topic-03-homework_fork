@@ -81,6 +81,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "dashboard.context_processors.alert_notifications",
             ],
         },
     },
@@ -120,6 +121,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+
+LOGIN_URL = "user:auth"
+LOGIN_REDIRECT_URL = "dashboard:index"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

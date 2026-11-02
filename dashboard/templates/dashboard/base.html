@@ -46,6 +46,14 @@
     </header>
 </div>
 
+{% if triggered_alerts_count %}
+<div class="container">
+    <div class="alert alert-warning">
+        Сработавших уведомлений: <a href="{% url 'dashboard:alerts' %}">{{ triggered_alerts_count }}</a>
+    </div>
+</div>
+{% endif %}
+
 <main class="flex-shrink-0">
     <div class="container">
 
@@ -60,6 +68,8 @@
     <div class="container">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
             <li class="nav-item"><a href="{% url 'dashboard:index' %}" class="nav-link px-2 text-muted">Главная</a></li>
+            <li class="nav-item"><a href="{% url 'dashboard:watchlist' %}" class="nav-link px-2 text-muted">Наблюдения</a></li>
+            <li class="nav-item"><a href="{% url 'dashboard:alerts' %}" class="nav-link px-2 text-muted">Уведомления</a></li>
         </ul>
         <p class="text-center text-muted">Investing</p>
     </div>
@@ -67,4 +77,4 @@
 
 
 </body>
-</html><p><a href="{% url "dashboard:watchlist" %}">Наблюдения</a> | <a href="{% url "dashboard:alerts" %}">Уведомления</a></p>
+</html>

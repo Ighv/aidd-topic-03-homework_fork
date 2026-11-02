@@ -1,6 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse
 
 from .forms import PriceAlertForm, WatchlistForm
 from .models import PriceAlert, Watchlist
@@ -17,9 +17,12 @@ def watchlist_add(request):
     if request.method == 'POST':
         form = WatchlistForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.user = request.user
-            obj.save()
+            _, created = Watchlist.objects.get_or_create(
+                user=request.user,
+                share=form.cleaned_data['share'],
+            )
+            if not created:
+                messages.info(request, 'Эта акция уже есть в списке наблюдения.')
             return redirect('dashboard:watchlist')
     else:
         form = WatchlistForm()

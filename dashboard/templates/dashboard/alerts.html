@@ -3,16 +3,27 @@
 <h2>Ценовые уведомления</h2>
 <a href="{% url 'dashboard:alert_add' %}">Создать</a>
 <table>
-<tr><th>Тикер</th><th>Условие</th><th>Целевая</th><th>Активен</th><th>Сработал</th><th>Действие</th></tr>
-{% for alert in alerts %}
 <tr>
+  <th>Тикер</th>
+  <th>Условие</th>
+  <th>Целевая цена</th>
+  <th>Активно</th>
+  <th>Сработало</th>
+  <th>Время</th>
+  <th>Действие</th>
+</tr>
+{% for alert in alerts %}
+<tr{% if alert.triggered %} style="background:#fff3cd"{% endif %}>
   <td>{{ alert.share.ticker }}</td>
-  <td>{{ alert.condition }}</td>
+  <td>{{ alert.get_condition_display }}</td>
   <td>{{ alert.target_price }}</td>
-  <td>{{ alert.is_active }}</td>
-  <td>{{ alert.triggered }}</td>
+  <td>{{ alert.is_active|yesno:"да,нет" }}</td>
+  <td>{{ alert.triggered|yesno:"да,нет" }}</td>
+  <td>{{ alert.triggered_at|default:"—" }}</td>
   <td><a href="{% url 'dashboard:alert_remove' alert.pk %}">Удалить</a></td>
 </tr>
+{% empty %}
+<tr><td colspan="7">Уведомлений пока нет.</td></tr>
 {% endfor %}
 </table>
 {% endblock %}
